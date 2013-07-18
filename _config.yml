@@ -1,7 +1,8 @@
 name: visualsace
 pygments: true
 paginate: 10
-url: http://localhost:4000
+url: http://boombo.github.io
+baseurl: /boombo
 markdown: rdiscount
 permalink: pretty
 pygments: true
