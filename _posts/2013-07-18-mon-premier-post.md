@@ -1,8 +1,15 @@
 ---
 layout: post
-title:  "Mon Premier Post !"
-date:   2013-07-18 00:14:39
+title: "Mon Premier Post !"
+date: {}
+published: true
 ---
+
+## Hopla encore un test
+
+[google](www.google.com "google")
+
+
 
 Et voilà nous y sommes presque !!
 
