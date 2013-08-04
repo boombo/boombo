@@ -5,7 +5,7 @@ date:   2013-07-19 00:14:39
 ---
 
 
-Et voilà nous y sommes presque !!
+...Et voilà nous y sommes presque !!
 
 Jekyll also offers powerful support for code snippets:
 
