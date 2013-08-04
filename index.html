@@ -5,7 +5,7 @@ title: visualsace
 
 {% for post in paginator.posts limit: 5 %}
 <div class="post">
-	<h1><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h1>
+	<h1><a href="{{ site.url }}/{{ post.url }}">{{ post.title }}</a></h1>
 	<div class="date">{{ post.date | date_to_string }}</div>  
 	<br/>
 	<p>{{ post.content | strip_html | truncatewords:150}}</p> 
