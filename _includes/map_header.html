@@ -15,11 +15,13 @@
   <link rel="stylesheet" href="{{ relative }}css/syntax.css">
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ relative }}css/main.css">
   <link rel="stylesheet" href="{{ relative }}css/bootstrap.css">
+  
   <link rel="stylesheet" href="{{ relative }}css/whhg.css">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lora:700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,600' rel='stylesheet' type='text/css'>
   <!--[if lt IE 9]>
     <script src="js/vendor/html5-3.6-respond-1.1.0.min.js"></script>
     <![endif]-->
@@ -27,31 +29,14 @@
   <!--[if lte IE 8]>
     <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.ie.css' rel='stylesheet' >
     <![endif]-->
-    <link rel="stylesheet" href="{{ relative }}css/main_posts.css">
+    <link rel="stylesheet" href="{{ relative }}css/MarkerCluster.css" />
+  <link rel="stylesheet" href="{{ relative }}css/MarkerCluster.Default.css" />
+  <!--[if lte IE 8]><link rel="stylesheet" href="../dist/MarkerCluster.Default.ie.css" /><![endif]-->
+    
+  <link rel="stylesheet" href="{{ relative }}css/common.css">
+  <link rel="stylesheet" href="{{ relative }}css/map.css"> 
+  
+  <!-- <link rel="stylesheet" href="{{ relative }}css/main.css">  -->
+
   </head>
   <body>
-
-    <div class="navbar navbar-fixed-top">    
-      <div class="navbar-inner">
-
-        <span class="btn menu" data-icon="&#xe001;" aria-hidden="true" data-toggle="collapse" data-target=".nav-collapse"></span>
-        <a href="http://visualsace.fr" >
-          <img class="brand" src="{{ relative }}img/logo.svg" data-fallback="img/logo.png" alt="visualsace" />
-        </a>
-
-        <div class="container navbar-menu-container">
-          <div class="nav-collapse collapse">
-            <ul class="nav nav-pills">
-              <li class="active"><a href="http://visualsace.fr" id="home">Accueil</a></li>
-              <li><a href="#" id="about">A Propos</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-
-      </div>
-    </div> <!--/.navbar -->
-
-    <div id="map" class="background"></div>
-
-    <div class="container posts-container">
-     <!-- <h1 class="title"><a href="/">{{ site.name }}</a></h1> -->

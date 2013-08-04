@@ -1,13 +1,54 @@
 ---
-layout: default
+layout: index
 title: visualsace
 ---
 
-<div id="home">
-  <h1>Blog Posts bla bla</h1>
-  <ul class="posts">
-	{% for post in site.posts limit: 10 %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
+{% for post in paginator.posts limit: 5 %}
+<div class="post">
+	<h1><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h1>
+	<div class="date">{{ post.date | date_to_string }}</div>  
+	<br/>
+	<p>{{ post.content | strip_html | truncatewords:150}}</p> 
+	<a href="{{ post.url }}">Lire la suite...</a>
+</div>
+{% endfor %}
+
+<!-- Pagination links -->
+<div id="post-pagination" class="pagination">
+	<ul class="pages">
+		<li class="page">
+			{% if paginator.previous_page %}
+				{% if paginator.previous_page == 1 %}
+					<a href="/">&laquo;</a>
+				{% else %}
+					<a href="{{ paginator.previous_page_path }}">&laquo;</a>
+				{% endif %}
+			{% else %}
+				<span>&laquo;</span>
+			{% endif %}
+	 	</li>
+		<li class="page">
+			{% if paginator.page == 1 %}
+				<span class="current-page">1</span>
+			{% else %}
+				<a href="/">1</a>
+			{% endif %}
+		</li>
+		{% for count in (2..paginator.total_pages) %}
+		<li class="page">
+			{% if count == paginator.page %}
+				<span class="current-page">{{ count }}</span>
+			{% else %}
+				<a href="/page/{{ count }}">{{ count }}</a>
+			{% endif %}
+		</li>
+		{% endfor %}
+		<li class="page">
+			{% if paginator.next_page %}
+				<a href="{{ paginator.next_page_path }}">&raquo;</a>
+			{% else %}
+				<span>&raquo;</span>
+			{% endif %}
+		</li>
+	</ul>
 </div>

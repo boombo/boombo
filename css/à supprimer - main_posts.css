@@ -13,10 +13,10 @@
 }
 
 .posts-container {
-	padding: 12px;
+	padding: 12px 100px 12px 100px;
 	background-color: #FFF;
 	border: solid #24A6E8;
-	border-width: 15px 1px;
+	border-width: 10px 1px;
 	margin-top: 52px;
 	opacity: 0.9;
 	position: absolute;
@@ -24,7 +24,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	width: 940px;
+	width: 764px;
 }
 
 .posts-outer-container{
@@ -42,7 +42,7 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	z-index: -10;
+	/*z-index: -10;*/
 }
 
  h1, h2, h3, h4, h5, h6 {
