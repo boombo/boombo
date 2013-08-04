@@ -1,6 +1,6 @@
 ---
 layout: blog
-title:  "post 6"
+title:  "Post 6"
 date:   2013-07-19 00:14:39
 ---
 
