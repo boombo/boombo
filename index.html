@@ -19,7 +19,7 @@ title: visualsace
 		<li class="page">
 			{% if paginator.previous_page %}
 				{% if paginator.previous_page == 1 %}
-					<a href="/">&laquo;</a>
+					<a href="{{ site.baseurl }}/">&laquo;</a>
 				{% else %}
 					<a href="{{ site.baseurl }}/{{ paginator.previous_page_path }}">&laquo;</a>
 				{% endif %}
@@ -31,7 +31,7 @@ title: visualsace
 			{% if paginator.page == 1 %}
 				<span class="current-page">1</span>
 			{% else %}
-				<a href="/">1</a>
+				<a href="{{ site.baseurl }}/">1</a>
 			{% endif %}
 		</li>
 		{% for count in (2..paginator.total_pages) %}
