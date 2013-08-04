@@ -9,7 +9,7 @@ title: visualsace
 	<div class="date">{{ post.date | date_to_string }}</div>  
 	<br/>
 	<p>{{ post.content | strip_html | truncatewords:150}}</p> 
-	<a href="{{ post.url }}">Lire la suite...</a>
+	<a href="{{ site.baseurl }}/{{ post.url }}">Lire la suite...</a>
 </div>
 {% endfor %}
 
@@ -21,7 +21,7 @@ title: visualsace
 				{% if paginator.previous_page == 1 %}
 					<a href="/">&laquo;</a>
 				{% else %}
-					<a href="{{ paginator.previous_page_path }}">&laquo;</a>
+					<a href="{{ site.baseurl }}/{{ paginator.previous_page_path }}">&laquo;</a>
 				{% endif %}
 			{% else %}
 				<span>&laquo;</span>
@@ -39,13 +39,13 @@ title: visualsace
 			{% if count == paginator.page %}
 				<span class="current-page">{{ count }}</span>
 			{% else %}
-				<a href="/page/{{ count }}">{{ count }}</a>
+				<a href="{{ site.baseurl }}/page/{{ count }}">{{ count }}</a>
 			{% endif %}
 		</li>
 		{% endfor %}
 		<li class="page">
 			{% if paginator.next_page %}
-				<a href="{{ paginator.next_page_path }}">&raquo;</a>
+				<a href="{{ site.baseurl }}/{{ paginator.next_page_path }}">&raquo;</a>
 			{% else %}
 				<span>&raquo;</span>
 			{% endif %}
