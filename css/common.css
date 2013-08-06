@@ -1,7 +1,7 @@
 * {
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 html {
@@ -53,9 +53,25 @@ ul, ol {
   /*z-index: -10;*/
 }
 
+.close-icon{
+  /*color: #24A6E8;*/
+  border: none;
+  display: none;
+  float: right;
+  font-size: 2.5em;
+  line-height: normal;
+  margin-top: 10px;
+  margin-right: -15px;
+  padding: 0;
+}
+
 .date{
   color: #979797;
   font-style: italic;
+}
+
+.invisible{
+  display: none;
 }
 
 .leaflet-container {
@@ -107,14 +123,6 @@ ul, ol {
   /*z-index: -100;*/
 }
 
-/*.map-centered { 
-  bottom: 0;
-  left: -50%;
-  position: fixed;
-  top: 48px; 
-  width: 200%; 
-}*/
-
 .map-attribution {
   position: fixed !important;
 }
@@ -141,8 +149,8 @@ ul, ol {
 
 .nav-pills > li > a {
   -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 8px;
@@ -220,28 +228,20 @@ ul, ol {
 }
 
 .page-container {
-  /*padding: 12px 140px 12px 140px;*/
   background-color: #FFF;
   border: solid #24A6E8;
   border-width: 10px 1px;
   opacity: 0.9;
-  /*position: absolute;*/
   top: 52px;
   bottom: 0;
-  /*left: 0;
-  right: 0;*/
-  /*width: 684px;*/
 }
 
 .page-container-centered {
   padding: 12px 140px 0 140px;
-/*  left: 0;
-  right: 0;*/
 }
 
 .page-container-right {
   padding: 12px 10px 0 10px;
-  /*float: right;*/ 
   margin-right: 15px;
   margin-left: auto;
   right: 15px;
@@ -262,6 +262,10 @@ ul, ol {
   color: #FFFFFF;
 }
 
+.visible{
+  display: inline;
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -280,10 +284,16 @@ ul, ol {
     margin: 0;
   }
 
-  .page-container{
+  .page-container-centered{
     padding: 12px 50px 12px 50px;
     width: 100%;
   }
+
+  .page-container-right {
+    margin-right: 0;
+    width: 45%;
+  }
+
 
    /* .sidebox {
       right: 0;
@@ -293,6 +303,15 @@ ul, ol {
 }
 
 @media (max-width: 600px) {
+
+  .close-icon{
+    display: inline;
+  }
+
+  #map{
+    left: 0;
+    width: 100%;
+  }
 
   .navbar-fixed-top .container, .navbar-fixed-bottom .container {
     width: 100%;
@@ -307,8 +326,13 @@ ul, ol {
   }
 
   .page-container{
+    /*display: none;*/
     min-width: 306px;
     padding: 12px 20px 12px 20px;
+    width: 100%;
+  }
+
+  #pane{
     width: 100%;
   }
 
@@ -449,9 +473,9 @@ ul, ol {
     speak: none;
     text-transform: none;
     -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
+       -moz-font-smoothing: antialiased;
+        -ms-font-smoothing: antialiased;
+         -o-font-smoothing: antialiased;
   }
 
   .brand:before{
@@ -477,9 +501,9 @@ ul, ol {
     text-transform: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased; 
-    -moz-font-smoothing: antialiased;
-    -ms-font-smoothing: antialiased;
-    -o-font-smoothing: antialiased;
+       -moz-font-smoothing: antialiased;
+        -ms-font-smoothing: antialiased;
+         -o-font-smoothing: antialiased;
   }
 
   .icon-twitter:before {
