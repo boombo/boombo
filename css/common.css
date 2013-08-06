@@ -14,7 +14,6 @@ body {
   font-style: normal;
   font-weight: 400;
   padding-top: 52px;
-  padding-bottom: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -59,8 +58,73 @@ ul, ol {
   font-style: italic;
 }
 
+.leaflet-container {
+  background: none !important;
+}
+
+.leaflet-control {
+  border-radius: 0;
+  left: 0;
+  opacity: 0.8;
+  position: fixed;
+}
+
+.leaflet-control a.mapbox-share {
+  background-image: none;
+  font-size: 16px;
+}
+
+.leaflet-control-attribution {
+  bottom: 2px;    
+  left: 0;
+  position: fixed;
+}
+
+.leaflet-control-container #geolocate{
+  font-size: 16px;
+}
+
+.leaflet-control-mapbox-share {
+  top: 125px;
+}
+
+.leaflet-control-zoom {
+  top: 52px;
+}
+
+.loading {
+  background-image: url("../img/loader.gif") !important;
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat !important;
+}
+
+#map { 
+  bottom:0;
+  left:-50%;
+  position:absolute; 
+  top: 48px; 
+  width: 200%; 
+  z-index: -100;
+}
+
+.map-attribution {
+  position: fixed !important;
+}
+
+.map-tooltip {
+  display: none !important;
+}
+
 .menu {
   display: none;
+}
+
+#pane {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 66.6666%;
 }
 
 .nav {

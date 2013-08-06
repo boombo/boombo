@@ -32,4 +32,4 @@ disqus_config = function() {
   	
 }
 
-createScrollBar();
+//createScrollBar();
