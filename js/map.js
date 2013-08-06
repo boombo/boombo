@@ -4,8 +4,8 @@ if(!Modernizr.svg) {
 	imgs.attr('src', imgs.data('fallback'));
 }
 
-$("#menu li").removeClass("active");
-$("li#maps").addClass("active");
+/*$("#menu li").removeClass("active");
+$("li#maps").addClass("active");*/
 
 // Load map
 var map = L.mapbox.map('map', 'moasth.map-pzgtnf9m,moasth.map-czvq0pvt', {minZoom: 5, maxZoom: 15, maxBounds: [[41.275605,-13.64502],[52.534491,19.665527]]}).addControl(L.mapbox.shareControl());
@@ -164,10 +164,35 @@ function getContent(t){
     });
 
 	// Scrollbar
-	$(".content").niceScroll({cursorborder: "none", cursorwidth: "8px", cursorborderradius:0, cursoropacitymin:0.25 , cursorcolor:"#24A6E8"});
+	//$(".content").niceScroll({cursorborder: "none", cursorwidth: "8px", cursorborderradius:0, cursoropacitymin:0.25 , cursorcolor:"#24A6E8"});
+
+    // Scrollbar
+function createScrollBar(){
+    $("#js-page").niceScroll({cursorborder: "none", cursorwidth: "8px", cursorborderradius:0, cursoropacitymin:0.25 , cursorcolor:"#24A6E8"});
+};
+
+function refreshScrollBar(){
+    $("#js-page").getNiceScroll().resize();
+};
+
+disqus_config = function() {
+  /*this.callbacks.afterRender.push(function() { console.log('DISQUS afterRender'); refreshScrollBar();});
+  this.callbacks.onNewComment.push(function() { console.log('DISQUS onNewComment'); refreshScrollBar();});
+  this.callbacks.onPaginate.push(function() { console.log('DISQUS onPaginate'); refreshScrollBar();});*/
+  /* Available callbacks are afterRender, onInit, onNewComment, onPaginate, onReady, preData, preInit, preReset */
+    /*this.callbacks.afterRender = [refreshScrollBar()];
+    this.callbacks.onNewComment = [refreshScrollBar()];
+    this.callbacks.onPaginate = [refreshScrollBar()];
+*/
+    this.callbacks.onNewComment = [function() { refreshScrollBar(); }];
+    this.callbacks.onReady = [function() { refreshScrollBar(); }];
+    
+}
+
+createScrollBar();
 
 	// Navigation bar
-	$('.nav-pills a').on("click", function(e) {
+/*	$('.nav-pills a').on("click", function(e) {
 		var  $this = $(this);
 		$("#js-navbar li.active").removeClass("active");
 		$this.parent("li").addClass("active");
@@ -176,5 +201,5 @@ function getContent(t){
 		$data = $(contentId).html();
 		$('.content').html($data);
 	});
-
+*/
 	var jqxhr;

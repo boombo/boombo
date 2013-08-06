@@ -4,13 +4,6 @@ if(!Modernizr.svg) {
 	imgs.attr('src', imgs.data('fallback'));
 }
 
-$("#menu li").removeClass("active");
-$("li#home").addClass("active");
-
-function comment(){
-	alert("comment");
-}
-
 // Scrollbar
 function createScrollBar(){
 	$("#js-page").niceScroll({cursorborder: "none", cursorwidth: "8px", cursorborderradius:0, cursoropacitymin:0.25 , cursorcolor:"#24A6E8"});

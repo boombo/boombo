@@ -1,11 +1,14 @@
 {% include map_header.html %}
-{% include navbar.html %}
-    <div id="pane"> 
-  		<div id="map"></div>
-  	</div>
+{% include navbar.html param="maps" %}
+<div id="pane"> 
+	<div id="map"></div>
+ </div>
 
-  	<div id="js-sidebox" class="sidebox pull-right content">
-
-  		{{ content }}
-  		
+<div id="js-page" class="container page-container page-container-right">
+	<div class="post">
+		{{ content }}
+	</div>
+	<br/>
+	<div id="disqus_thread"></div>
+</div> 
 {% include map_footer.html %}

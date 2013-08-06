@@ -137,7 +137,7 @@ ul, ol {
 }
 
 .navbar-inner {
-  background-color: #000; 
+  background-color: #07071F; 
   background-image: none;
   background-repeat: no-repeat;
   filter: none;
@@ -148,7 +148,7 @@ ul, ol {
 }
 
 .page-container {
-  padding: 12px 140px 12px 140px;
+  /*padding: 12px 140px 12px 140px;*/
   background-color: #FFF;
   border: solid #24A6E8;
   border-width: 10px 1px;
@@ -156,13 +156,25 @@ ul, ol {
   position: absolute;
   top: 52px;
   bottom: 0;
-  left: 0;
-  right: 0;
+  /*left: 0;
+  right: 0;*/
   /*width: 684px;*/
 }
 
+.page-container-centered {
+  padding: 12px 140px 12px 140px;
+  left: 0;
+  right: 0;
+}
+
+.page-container-right {
+  padding: 12px;
+  right: 15px;
+  width: 33.3333%;
+}
+
 .post {
-  border-bottom: 1px solid #efefef;
+  border-bottom: 2px solid rgba(0,49,79,.08);
   padding: 20px 0 40px 0;
 }
 
@@ -290,7 +302,7 @@ ul, ol {
       -moz-border-left-colors: none;
       -moz-border-right-colors: none;
       -moz-border-top-colors: none;
-      background-color: #000;
+      background-color: inherit;
       background-image: none;
       background-repeat: repeat-x;
       border-color: #000;
