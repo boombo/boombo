@@ -45,7 +45,7 @@ ul, ol {
 
 .background {
   background: url("../img/bg.png") repeat;
-  position: fixed;
+  position: fixed !important;
   top: 0;
   left: 0;
   bottom: 0;
@@ -99,13 +99,21 @@ ul, ol {
 }
 
 #map { 
-  bottom:0;
-  left:-50%;
-  position:absolute; 
+  bottom: 0;
+  left: -50%;
+  position: absolute;
   top: 48px; 
   width: 200%; 
-  z-index: -100;
+  /*z-index: -100;*/
 }
+
+/*.map-centered { 
+  bottom: 0;
+  left: -50%;
+  position: fixed;
+  top: 48px; 
+  width: 200%; 
+}*/
 
 .map-attribution {
   position: fixed !important;
@@ -217,7 +225,7 @@ ul, ol {
   border: solid #24A6E8;
   border-width: 10px 1px;
   opacity: 0.9;
-  position: absolute;
+  /*position: absolute;*/
   top: 52px;
   bottom: 0;
   /*left: 0;
@@ -226,15 +234,22 @@ ul, ol {
 }
 
 .page-container-centered {
-  padding: 12px 140px 12px 140px;
-  left: 0;
-  right: 0;
+  padding: 12px 140px 0 140px;
+/*  left: 0;
+  right: 0;*/
 }
 
 .page-container-right {
-  padding: 12px;
+  padding: 12px 10px 0 10px;
+  /*float: right;*/ 
+  margin-right: 15px;
+  margin-left: auto;
   right: 15px;
   width: 33.3333%;
+}
+
+.pagination {
+  height: 30px;
 }
 
 .post {
