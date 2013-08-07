@@ -134,6 +134,8 @@ function getContent(t){
     				selectedLayer = layer;
 					setSelectedIcon(e);
 
+                    $("#js-page").removeClass("invisible");
+
 					var prop = e.target.feature.properties;
 
 					if (prop) {
