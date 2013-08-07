@@ -4,168 +4,189 @@ if(!Modernizr.svg) {
 	imgs.attr('src', imgs.data('fallback'));
 }
 
-// Load map
-var map = L.mapbox.map('map', 'moasth.map-pzgtnf9m,moasth.map-czvq0pvt', {minZoom: 5, maxZoom: 15, maxBounds: [[41.275605,-13.64502],[52.534491,19.665527]]}).addControl(L.mapbox.shareControl());
+var Map = function () {
+    var _map;
+    var _config = {
+        mapElementId: 'map',
+        mapId: 'moasth.map-pzgtnf9m,moasth.map-czvq0pvt',
+        options: {minZoom: 7, maxZoom: 19, maxBounds: [[41.275605,-13.64502],[52.534491,19.665527]]},
+    }
 
-// Add custom icon for share control	
-$("a.mapbox-share").addClass("icon-share");
+    var init = function (p_options) {
+        // copy properties of `options` to `config`. Will overwrite existing ones.
+        for(var prop in p_options) {
+            if(p_options.hasOwnProperty(prop)){
+                _config[prop] = p_options[prop];
+            }
+        }
+        _map = L.mapbox.map(_config.mapElementId, _config.mapId, _config.options);
+        _addFeatures();
+        _geolocate();
+    };
+
+    var _geolocate = function () {
+        if (!Modernizr.geolocation) {
+            // do something ?
+        } else {
+            // Add geolocation control
+            // TODO: change because mapbox share control removed
+            $(".leaflet-control-zoom").append('<a id="geolocate" class="icon-gpsoff-gps"></a>');
+            var geolocate = document.getElementById('geolocate');
+            geolocate.onclick = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                _map.locate();
+            };
+        }
+
+        // Once we've got a position, zoom and center the map on it, and add a single marker.
+        _map.on('locationfound', function(e) {
+            _map.markerLayer.clearLayers();
+            $("#geolocate").removeClass("icon-gpsoff-gps").addClass("icon-gpson");
+            _map.fitBounds(e.bounds);
+            _map.markerLayer.setGeoJSON({
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [e.latlng.lng, e.latlng.lat]
+                },
+                properties: {
+                    'title': 'Votre position actuelle',
+                    'marker-color': '#EC3C4D'
+                }
+            });
+        });
+
+        // If the user chooses not to allow their location to be shared, display an error message.
+        _map.on('locationerror', function() {
+            // do something ?
+        });
+    };
+
+    var _jqxhr;
+
+    var _getContent = function (t) {
+        var nocontent = "<p>Aucune information n'est disponible</p>";
+        var $page = $("#js-page"); 
+        $page.addClass("loading");
+        var $title = $page.find("h1");
+        var $paragraphs = $page.find("p");
+        _jqxhr = 
+            $.ajax( {url: "http://fr.wikipedia.org/w/api.php?format=json&action=query&titles="+t+"&prop=extracts", dataType: "jsonp" })
+            .done(function(json) { 
+                var pages = json.query.pages;
+                var pageKey = Object.keys(pages)[0];
+                var content = "";
+                $paragraphs.remove();
+                
+                if(pages && pageKey && pages[pageKey].extract) {
+                    content = pages[pageKey].extract;
+                    content = content.replace(/\[modifier\]/gi,"");
+                }
+                else {
+                    content = nocontent;
+                }
+                $(content).insertAfter($title);
+                $page.find("ul.gallery").remove();
+                var $todelete = $("#js-page h2:contains(Notes et références), #js-page h2:contains(Articles connexes), #js-page h2:contains(Liens externes), #js-page h2:contains(Bibliographie)");
+                $todelete.nextAll().remove(); 
+                $todelete.remove();
+            })
+            .fail(function(_jqXHR, textStatus, errorThrown) { 
+                $paragraphs.remove();
+                if(textStatus != 'abort') $(nocontent).insertAfter($title); 
+            })
+            .always(function() { $page.removeClass("loading");})
+    };
+
+    // cf. http://jsfiddle.net/paulovieira/RvRPh/1/
+    function _setSelectedIcon(e) {
+        var layer = e.target;
+        var iconElem = L.DomUtil.get(layer._icon);
+        iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-l-circle-stroked+24A6E8.png';
+        iconElem.style.height = '90px';
+        iconElem.style.width = '35px';
+        iconElem.style.marginLeft = '-17.5px';
+        iconElem.style.marginTop = '-45px';
+    };
+
+    function _setDefaultIcon(e) {
+        var layer = e.target == null ? e : e.target;
+        var iconElem = L.DomUtil.get(layer._icon);
+        // Non défini si le marker sélectionné se retrouve dans un cluster après dézoom
+        if(iconElem) {
+            iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-m+24A6E8.png';
+            iconElem.style.height = '70px';
+            iconElem.style.width = '30px';
+            iconElem.style.marginLeft = '-15px';
+            iconElem.style.marginTop = '-35px';
+        }
+    };
+
+    var _selectedIcon;
+    var _selectedLayer;
+    var _defaultIcon;
+
+    function _onEachFeature(f, l) {
+        f['marker-color'] = '#24A6E8';
+        _defaultIcon = L.mapbox.marker.icon(f);
+        l.setIcon(_defaultIcon);
+    };
+
+    function _addFeatures () {
+        $.getJSON('../data/chateaux.geojson', function(geojson) {
+            var layer = L.geoJson(geojson, {
+                onEachFeature: _onEachFeature
+            }); 
+
+            layer.eachLayer(function (layer) {
+                layer.on({
+                    click: function(e){
+                        if(_selectedLayer){
+                            _setDefaultIcon(_selectedLayer);
+                        }
+                        _selectedLayer = layer;
+                        _setSelectedIcon(e);
+                        $("#js-page").removeClass("invisible");
+                        var prop = e.target.feature.properties;
+
+                        if (prop) {
+                            var $title = $("#js-page h1");
+                            if (prop.name === $title.html()) return;                
+                            $title.html(prop.name);
+                            $('#js-page h1~*').remove();
+                            if (prop.wikipedia) _getContent(prop.wikipedia);              
+                            else {
+                                if(_jqxhr && _jqxhr.readystate != 4){
+                                    _jqxhr.abort();
+                                }
+                                $("<p>Aucune information n'est disponible</p>").insertAfter("#js-page h1");
+                            }
+                        }
+                    }
+                });
+            });
+
+            var markers = new L.MarkerClusterGroup({
+                showCoverageOnHover: false,
+                maxClusterRadius: 35
+            });
+            
+            markers.addLayer(layer);
+            _map.addLayer(markers);
+            _map.setZoom(8)
+        });
+    };
+
+    return {
+        init: init
+    };
+}();
+
+Map.init();
 
 $("#js-close-page").click(function(e){
     e.preventDefault();
     e.stopPropagation();
     $("#js-page").addClass("invisible");
 });
-
-// Geolocation
-if (!navigator.geolocation) {
-    // do something ?
-} else {
-    // Add geolocation control
-    $(".leaflet-control-mapbox-share").append('<a id="geolocate" class="icon-gpsoff-gps"></a>');
-	var geolocate = document.getElementById('geolocate');
-    
-    geolocate.onclick = function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        map.locate();
-    };
-}
-
-// Once we've got a position, zoom and center the map on it, and add a single marker.
-map.on('locationfound', function(e) {
-	map.markerLayer.clearLayers();
-	$("#geolocate").removeClass("icon-gpsoff-gps").addClass("icon-gpson");
-    map.fitBounds(e.bounds);
-
-	map.markerLayer.setGeoJSON({
-        type: "Feature",
-        geometry: {
-            type: "Point",
-            coordinates: [e.latlng.lng, e.latlng.lat]
-        },
-        properties: {
-        	'title': 'Votre position',
-            'marker-color': '#EC3C4D'
-        }
-    });
-});
-
-// If the user chooses not to allow their location to be shared, display an error message.
-map.on('locationerror', function() {
-    // do something ?
-});
-
-function getContent(t){
-    	var nocontent = "<p>Aucune information n'est disponible</p>";
-    	var $sidebox = $("#js-sidebox"); 
-    	$sidebox.addClass("loading");
-    	var $title = $sidebox.find("h1");
-    	var $paragraphs = $sidebox.find("p");
-    	jqxhr = 
-    	$.ajax( {url: "http://fr.wikipedia.org/w/api.php?format=json&action=query&titles="+t+"&prop=extracts", dataType: "jsonp" })
-    	.done(function(json) { var pages = json.query.pages;
-    		var pageKey = Object.keys(pages)[0];
-    		var content = "";
-    		$paragraphs.remove();
-    		if(pages && pageKey && pages[pageKey].extract) {
-    			content = pages[pageKey].extract;
-    			content = content.replace(/\[modifier\]/gi,"");
-    		}
-    		else {
-    			content = nocontent;
-    		}
-    		$(content).insertAfter($title);
-    		$sidebox.find("ul.gallery").remove();
-    		var $todelete = $("#js-sidebox h2:contains(Notes et références), #js-sidebox h2:contains(Articles connexes), #js-sidebox h2:contains(Liens externes), #js-sidebox h2:contains(Bibliographie)");
-    		$todelete.nextAll().remove(); 
-    		$todelete.remove();
-    	})
-    	.fail(function(jqXHR, textStatus, errorThrown) { $paragraphs.remove();
-    		if(textStatus != 'abort') $(nocontent).insertAfter($title); })
-    	.always(function() { $sidebox.removeClass("loading");})
-    }
-
-	// cf. http://jsfiddle.net/paulovieira/RvRPh/1/
-	function setSelectedIcon(e) {
-		var layer = e.target;
-	    var iconElem = L.DomUtil.get(layer._icon);
-	    iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-l-circle-stroked+24A6E8.png';
-	   	iconElem.style.height = '90px';
-	    iconElem.style.width = '35px';
-	    iconElem.style.marginLeft = '-17.5px';
-	    iconElem.style.marginTop = '-45px';
-	}
-
-	function setDefaultIcon(e) {
-		var layer = e.target == null ? e : e.target;
-		var iconElem = L.DomUtil.get(layer._icon);
-		// Non défini si le marker sélectionné se retrouve dans un cluster après dézoom
-	    if(iconElem) {
-		    iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-m+24A6E8.png';
-		    iconElem.style.height = '70px';
-		    iconElem.style.width = '30px';
-		    iconElem.style.marginLeft = '-15px';
-		    iconElem.style.marginTop = '-35px';
-		}
-	}
-
-	var selectedIcon;
-	var selectedLayer;
-	var defaultIcon;
-
-	function onEachFeature(f, l) {
-   		f['marker-color'] = '#24A6E8';
-    	defaultIcon = L.mapbox.marker.icon(f);
-    	l.setIcon(defaultIcon);
-    }
-
-	// Add features to the map
-	$.getJSON('../data/chateaux.geojson', function(geojson) {
-		var layer = L.geoJson(geojson, {
-            onEachFeature: onEachFeature
-        }); 
-
-        layer.eachLayer(function (layer) {
-        	layer.on({
-        		click: function(e){
-
-        			if(selectedLayer){
-    					setDefaultIcon(selectedLayer);
-    				}
-
-    				selectedLayer = layer;
-					setSelectedIcon(e);
-
-                    $("#js-page").removeClass("invisible");
-
-					var prop = e.target.feature.properties;
-
-					if (prop) {
-						var $title = $(".content h1");
-						if (prop.name === $title.html()) return;             	
-						$title.html(prop.name);
-						$('.content h1~*').remove();
-						if (prop.wikipedia) getContent(prop.wikipedia);              
-						else {
-							if(jqxhr && jqxhr.readystate != 4){
-								jqxhr.abort();
-							}
-							$("<p>Aucune information n'est disponible</p>").insertAfter(".content h1");
-						}
-					}
-				}
-			});
-        });
-
-        var markers = new L.MarkerClusterGroup({
-        	showCoverageOnHover: false,
-        	maxClusterRadius: 35
-        });
-        
-        markers.addLayer(layer);
-        map.addLayer(markers);
-        map.setZoom(8)
-
-    });
-
-	var jqxhr;

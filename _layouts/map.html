@@ -2,15 +2,14 @@
 {% include navbar.html param="maps" %}
 <div id="pane"> 
 	<div id="map"></div>
- </div>
-
+</div>
 <div id="js-page" class="container page-container page-container-right">
-<!-- <i class="icon-remove-circle close-icon"></i> -->
-<button type="button" id="js-close-page" class="icon-remove-circle close-icon"></button>
+	<!-- <button type="button" id="js-close-page" class="icon-remove-circle close-icon"></button> -->
+	<a id="js-close-page" class="close-icon" href="#">Fermer la page</a>
 	<div class="post">
 		{{ content }}
 	</div>
 	<br/>
-	<div id="disqus_thread"></div>
+	<!-- <div id="disqus_thread"></div> -->
 </div> 
 {% include map_footer.html %}
