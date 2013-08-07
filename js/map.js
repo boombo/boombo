@@ -10,8 +10,10 @@ var map = L.mapbox.map('map', 'moasth.map-pzgtnf9m,moasth.map-czvq0pvt', {minZoo
 // Add custom icon for share control	
 $("a.mapbox-share").addClass("icon-share");
 
-$(".close-icon").on("click", function(event){
-  $("#js-page").addClass("invisible");
+$("#js-close-page").click(function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    $("#js-page").addClass("invisible");
 });
 
 // Geolocation
