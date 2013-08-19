@@ -101,21 +101,39 @@ var Map = function () {
 
     // cf. http://jsfiddle.net/paulovieira/RvRPh/1/
     function _setSelectedIcon(e) {
-        var layer = e.target;
+        /*var layer = e.target;
         var iconElem = L.DomUtil.get(layer._icon);
         iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-l-circle-stroked+24A6E8.png';
         iconElem.style.height = '90px';
         iconElem.style.width = '35px';
         iconElem.style.marginLeft = '-17.5px';
-        iconElem.style.marginTop = '-45px';
+        iconElem.style.marginTop = '-45px';*/
+        _setIcon(e, 'selected');
     };
 
     function _setDefaultIcon(e) {
-        var layer = e.target == null ? e : e.target;
+        /*var layer = e.target == null ? e : e.target;
         var iconElem = L.DomUtil.get(layer._icon);
-        // Non défini si le marker sélectionné se retrouve dans un cluster après dézoom
         if(iconElem) {
             iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-m+24A6E8.png';
+            iconElem.style.height = '70px';
+            iconElem.style.width = '30px';
+            iconElem.style.marginLeft = '-15px';
+            iconElem.style.marginTop = '-35px';
+        }*/
+        _setIcon(e, 'default');
+    };
+
+    function _setIcon(e, type) {
+        var iconUrl = 'http://a.tiles.mapbox.com/v3/marker/';
+        var layer = e.target == null ? e : e.target;
+        var iconElem = L.DomUtil.get(layer._icon);
+        var icon = 'pin-m+24A6E8.png';
+        if(type == 'selected')
+            icon = 'pin-l-circle-stroked+24A6E8.png';
+        // Non défini si le marker sélectionné se retrouve dans un cluster après dézoom
+        if(iconElem) {
+            iconElem.src = iconUrl + icon;
             iconElem.style.height = '70px';
             iconElem.style.width = '30px';
             iconElem.style.marginLeft = '-15px';

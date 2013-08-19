@@ -3,6 +3,7 @@ layout: blog
 title:  "Post 4"
 date:   2013-07-18 00:14:39
 ---
+#Post 4
 
 Et voilà nous y sommes presque !!
 

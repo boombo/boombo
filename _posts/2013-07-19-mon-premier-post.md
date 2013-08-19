@@ -1,9 +1,10 @@
 ---
 layout: blog
-title:  "Post 6 Adrien"
+title:  "Post 6"
 date:   2013-07-19 00:14:39
 ---
 
+#Post 6
 
 ...Et voilà nous y sommes presque !!
 

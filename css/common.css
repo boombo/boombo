@@ -12,7 +12,9 @@ body {
   color: #000;
   font-family: 'Open Sans', sans-serif;
   font-style: normal;
+  font-size: 16px;
   font-weight: 400;
+  line-height: 24px;
   padding-top: 52px;
 }
 
@@ -75,7 +77,7 @@ ul, ol {
 .icon-menu{
   border-color: transparent;
   color: white;
-  font-size: 2.1em;
+  font-size: 1.5em;
   height: auto;
   padding: 0;
   right: 10px;
@@ -87,16 +89,29 @@ ul, ol {
   display: none;
 }
 
-.leaflet-bar {
+.leaflet-bar,
+.leaflet-touch .leaflet-bar{
   border: none;
 }
 
-.leaflet-bar a:last-child {
+.leaflet-bar a:hover {
   border: 1px solid #24A6E8;
 }
 
-.leaflet-bar a:first-child {
+.leaflet-bar a:first-child,
+.leaflet-touch .leaflet-bar a:first-child {
   border-bottom: none;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0; 
+          border-radius: 0;
+}
+
+.leaflet-bar a:last-child, 
+.leaflet-touch .leaflet-bar a:last-child {
+  border: 1px solid #24A6E8;
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0; 
+          border-radius: 0;
 }
 
 .leaflet-container {
@@ -196,7 +211,7 @@ ul, ol {
 
 .navbar{
   min-width: 320px;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .navbar .brand {
@@ -374,7 +389,6 @@ ul, ol {
   .navbar-menu-container {
     padding-right: 0;
   }
-
 
   .navbar .btn {
     -moz-border-bottom-colors: none;
