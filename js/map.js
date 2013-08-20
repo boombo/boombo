@@ -99,45 +99,33 @@ var Map = function () {
             .always(function() { $page.removeClass("loading");})
     };
 
-    // cf. http://jsfiddle.net/paulovieira/RvRPh/1/
-    function _setSelectedIcon(e) {
-        /*var layer = e.target;
-        var iconElem = L.DomUtil.get(layer._icon);
-        iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-l-circle-stroked+24A6E8.png';
-        iconElem.style.height = '90px';
-        iconElem.style.width = '35px';
-        iconElem.style.marginLeft = '-17.5px';
-        iconElem.style.marginTop = '-45px';*/
-        _setIcon(e, 'selected');
-    };
-
-    function _setDefaultIcon(e) {
-        /*var layer = e.target == null ? e : e.target;
-        var iconElem = L.DomUtil.get(layer._icon);
-        if(iconElem) {
-            iconElem.src = 'http://a.tiles.mapbox.com/v3/marker/pin-m+24A6E8.png';
-            iconElem.style.height = '70px';
-            iconElem.style.width = '30px';
-            iconElem.style.marginLeft = '-15px';
-            iconElem.style.marginTop = '-35px';
-        }*/
-        _setIcon(e, 'default');
-    };
-
-    function _setIcon(e, type) {
+    function _setIcon(e, isSelected) {
         var iconUrl = 'http://a.tiles.mapbox.com/v3/marker/';
         var layer = e.target == null ? e : e.target;
         var iconElem = L.DomUtil.get(layer._icon);
-        var icon = 'pin-m+24A6E8.png';
-        if(type == 'selected')
+        var icon, height, width, marginLeft, marginTop;
+
+        if (isSelected) {
             icon = 'pin-l-circle-stroked+24A6E8.png';
+            height = '90px';
+            width = '35px';
+            marginLeft = '-17.5px';
+            marginTop = '-45px';
+        } else {
+            icon = 'pin-m+24A6E8.png';
+            height = '70px';
+            width = '30px';
+            marginLeft = '-15px';
+            marginTop = '-35px';
+        }
+
         // Non défini si le marker sélectionné se retrouve dans un cluster après dézoom
         if(iconElem) {
             iconElem.src = iconUrl + icon;
-            iconElem.style.height = '70px';
-            iconElem.style.width = '30px';
-            iconElem.style.marginLeft = '-15px';
-            iconElem.style.marginTop = '-35px';
+            iconElem.style.height = height;
+            iconElem.style.width = width;
+            iconElem.style.marginLeft = marginLeft;
+            iconElem.style.marginTop = marginTop;
         }
     };
 
@@ -161,10 +149,10 @@ var Map = function () {
                 layer.on({
                     click: function(e){
                         if(_selectedLayer){
-                            _setDefaultIcon(_selectedLayer);
+                            _setIcon(_selectedLayer, false);
                         }
                         _selectedLayer = layer;
-                        _setSelectedIcon(e);
+                        _setIcon(e, true);
                         $("#js-page").removeClass("invisible");
                         var prop = e.target.feature.properties;
 

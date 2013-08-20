@@ -34,6 +34,7 @@ h1 a:link, h1 a:visited {
 }
 
 ul, ol {
+  list-style-position: inside;
   margin: 0 0 0 0;
 }
 
@@ -70,6 +71,10 @@ ul, ol {
   font-style: italic;
 }
 
+.description {
+  padding: 20px 0 40px 0;
+}
+
 #geolocate {
   margin-top: 20px;
 }
@@ -81,7 +86,7 @@ ul, ol {
   height: auto;
   padding: 0;
   right: 10px;
-  top: 20px;
+  top: 22px;
   width: auto;
 }
 
@@ -94,8 +99,15 @@ ul, ol {
   border: none;
 }
 
+.leaflet-bar a, .leaflet-bar a:hover {
+  height: 30px;
+  line-height: 30px;
+  width: 30px;
+}
+
 .leaflet-bar a:hover {
   border: 1px solid #24A6E8;
+  /*line-height: 30px;*/
 }
 
 .leaflet-bar a:first-child,
