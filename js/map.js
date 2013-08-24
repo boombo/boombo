@@ -9,7 +9,7 @@ var Map = function () {
     var _config = {
         mapElementId: 'map',
         mapId: 'moasth.map-pzgtnf9m,moasth.map-czvq0pvt',
-        options: {minZoom: 7, maxZoom: 19, maxBounds: [[41.275605,-13.64502],[52.534491,19.665527]]},
+        options: {minZoom: 7, maxZoom: 19, maxBounds: [[41.275605,-13.64502],[52.534491,19.665527]], detectRetina: true, retinaVersion: 'moasth.map-14d5d9tc,moasth.map-wdsgqecq'}
     }
 
     var init = function (p_options) {
