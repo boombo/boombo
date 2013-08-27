@@ -221,7 +221,7 @@ var Content = function () {
 
     var _setNoContent = function () {
         var html = ich.noInfoTpl({name: _name});
-        _$page.html(html); 
+        _$page.find(".description").html(html); 
     }
 
     var _displayContent = function (json) {
@@ -245,7 +245,7 @@ var Content = function () {
 
             var html = ich.completeTpl({name: _name});
             $(html).find(_css.textId).html(content);
-            _$page.html(html);
+            _$page.find(".description").html(html);
         }
         else {
            _setNoContent();
