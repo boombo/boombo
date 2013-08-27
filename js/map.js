@@ -197,7 +197,7 @@ var Content = function () {
         }
 
         _setTitle(_name);
-        _$page.removeClass(_css.invisibleClass);
+        /*_$page.removeClass(_css.invisibleClass);*/
 
         if (!p_id) {
             if(_jqxhr && _jqxhr.readystate != 4) _jqxhr.abort();
@@ -223,11 +223,13 @@ var Content = function () {
     var _setTitle = function (p_title) {
         var html = ich.titleTpl({name: p_title});
         _$page.find(".description").html(html); 
+        /*_$page.removeClass(_css.invisibleClass);*/
     }
 
     var _setNoContent = function () {
         var html = ich.noInfoTpl({name: _name});
         _$page.find(".description").html(html); 
+        _$page.removeClass(_css.invisibleClass);
     }
 
     var _displayContent = function (json) {
@@ -256,6 +258,7 @@ var Content = function () {
         else {
            _setNoContent();
         }
+        _$page.removeClass(_css.invisibleClass);
     }
 
     return {
