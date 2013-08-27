@@ -91,6 +91,17 @@ ul, ol {
   width: auto;
 }
 
+.image {
+  float: left;
+  height: 100%;
+  width: 32%;
+  margin-right: 5px;
+}
+
+.images {
+  margin-bottom: 10px;
+}
+
 .invisible {
   display: none;
 }
