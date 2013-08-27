@@ -216,7 +216,7 @@ var Content = function () {
    
     var _setTitle = function (p_title) {
         var html = ich.titleTpl({name: p_title});
-        _$page.html(html); 
+        _$page.find(".description").html(html); 
     }
 
     var _setNoContent = function () {
