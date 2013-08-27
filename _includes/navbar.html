@@ -3,6 +3,8 @@
 
         <!-- <span class="btn menu" data-icon="&#xe001;" aria-hidden="true" data-toggle="collapse" data-target=".nav-collapse"></span> -->
         <span class="btn menu icon-menu" data-toggle="collapse" data-target=".nav-collapse"></span>
+        {% capture lvl %}{{ page.url | append:'index.html' | split:'/' | size }}{% endcapture %}
+        {% capture relative %}{% for i in (3..lvl) %}../{% endfor %}{% endcapture %}
         <a href="{{site.url}}" >
           <img class="brand" src="{{ relative }}img/logo.svg" data-fallback="img/logo.png" alt="visualsace" />
         </a>

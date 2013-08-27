@@ -13,6 +13,9 @@ var Map = function () {
 
     // Other local variables
     var _map;
+    var _selectedIcon;
+    var _selectedLayer;
+    var _defaultIcon;
     
     var init = function (p_options) {
         // copy properties of `options` to `config`. Will overwrite existing ones.
@@ -23,7 +26,6 @@ var Map = function () {
         }
         _map = L.mapbox.map(_config.mapElementId, _config.mapId, _config.options);
         _addFeatures();
-
         _geolocate();
     };
 
@@ -99,10 +101,6 @@ var Map = function () {
         }
     };
 
-    var _selectedIcon;
-    var _selectedLayer;
-    var _defaultIcon;
-
     function _onEachFeature(f, l) {
         f['marker-color'] = '#24A6E8';
         _defaultIcon = L.mapbox.marker.icon(f);
@@ -152,17 +150,12 @@ var Content = function () {
         css:{
             closePageId: '#js-close-page',
             pageId: '#js-page',
+            textId: "#text",
             invisibleClass: 'invisible',
             loadingClass: 'loading'
         },
-        labels:{
-            /*next:'next',
-            previous:'back',
-            auto:'play'*/
-        },
         settings:{
             contentURL: "http://fr.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exchars=2000&titles=",
-            noContentString: "Aucune information n'est disponible", 
         }
     };
 
@@ -171,27 +164,9 @@ var Content = function () {
     var _labels = _config.labels;
     var _settings = _config.settings;
 
-    // Template
-    /*var _contentTpl = '<a id="js-close-page" class="close-icon" href="#">Fermer la page</a> 
-    <h1> {{name}} </h1> 
-    <div class="images">  
-        <div style="float: left;height: 100%;width: 33.33%;">
-            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-        </div>
-        <div style="float: left;width: 33.33%;">
-            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-        </div>
-        <div style="float: left;width: 33.33%;">
-            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-        </div>
-    </div>
-    {{content}}';*/
-
     // Other private variables
-    /* var _map;*/
-    var _$page;
-    var _$title;
-    var _$paragraphs;
+    var _$page = $(_css.pageId);
+    var _name;
     var _jqxhr;
 
     var init = function (p_options) {
@@ -203,83 +178,57 @@ var Content = function () {
         }
 
         // Fermeture de la pop-up de contenu sur mobile
-        $(_css.closePageId).click(function(e){
+        _$page.find(_css.closePageId).click(function(e){
             e.preventDefault();
             e.stopPropagation();
-            $(_css.pageId).addClass(_css.invisibleClass);
+            _$page.addClass(_css.invisibleClass);
         });
     };
 
     var display = function (p_name, p_id) {
-        _$page = $(_css.pageId);
-        _$title = _$page.find("h1");
-        _$paragraphs = _$page.find("p");  
+        _$page.removeClass(_css.invisibleClass);
+        var title = $.trim(_$page.find("h1").html());
+        _name = $.trim(p_name);
 
-        if (p_name === _$title.html()) return;                
-        // TODO : optimiser avec templates
-        _$title.html(p_name);
-        //$('#js-page h1~*').remove();
-        _deleteText();
+        if (_name === title) return;                
+        _setTitle(_name);
 
-        if (p_id) _getContent(p_id);              
-        else {
-            _abortPreviousRequest();
-            _displayNoContentString();
+        if (!p_id) {
+            if(_jqxhr && _jqxhr.readystate != 4) _jqxhr.abort();
+            _setNoContent();
+            return;
         }
-    }
-   
-    var _abortPreviousRequest = function () {
-        if(_jqxhr && _jqxhr.readystate != 4){
-            _jqxhr.abort();
-        }
-    }
 
-    var _getContent = function (t) {
-        _addLoading();
-        _jqxhr = 
-            $.ajax( {url: _settings.contentURL+t, dataType: "jsonp" })
+        _$page.addClass(_css.loadingClass);
+
+        _jqxhr = $.ajax( {url: _settings.contentURL+p_id, dataType: "jsonp" })
             .done(function(json) { 
                 _displayContent(json);    
             })
             .fail(function(_jqXHR, textStatus, errorThrown) { 
                 if(textStatus != 'abort') 
-                    _displayNoContentString(); 
+                    _setNoContent();
             })
             .always(function() { 
-                _removeLoading();
-            })
-    };
-
-     var _addLoading = function () {
-        _$page.addClass(_css.loadingClass);
+                _$page.removeClass(_css.loadingClass);  
+            });    
+    }
+   
+    var _setTitle = function (p_title) {
+        var html = ich.titleTpl({name: p_title});
+        _$page.html(html); 
     }
 
-    var _removeLoading = function () {
-        _$page.removeClass(_css.loadingClass);  
-    }
-
-    var _displayNoContentString = function () {
-        _deleteParagraphs();
-        $("<p>" + _settings.noContentString + "</p>").insertAfter(_$title);
-    }
-
-    // TODO : à revoir / optimiser
-    var _deleteParagraphs = function () {
-        _$paragraphs.remove();
-    }
-
-    var _deleteText = function () {
-        $('#js-page h1~*').remove();
+    var _setNoContent = function () {
+        var html = ich.noInfoTpl({name: _name});
+        _$page.html(html); 
     }
 
     var _displayContent = function (json) {
         var pages = json.query.pages;
         var pageKey = Object.keys(pages)[0];
         var content = "";
-        // Suppression du contenu (paragraphes)
-        //_deleteParagraphs();
-        _deleteText();
-        
+
         // Récupération content
         if(pages && pageKey && pages[pageKey].extract) {
             content = pages[pageKey].extract;
@@ -294,20 +243,13 @@ var Content = function () {
             $todelete.nextAll().remove(); 
             $todelete.remove();
 
-            /*var html = Mustache.render(contentTpl, {name: _$title.html(), content: content});*/
-            //var _contentTpl = "<h1> {{name}} </h1>"
-            var html = ich.contentTpl({name: _$title.html()});
-            /*var html = Mustache.render(contentTpl, {name: 'titre'});*/
-            $(html).find("#text").html(content);
+            var html = ich.completeTpl({name: _name});
+            $(html).find(_css.textId).html(content);
             _$page.html(html);
-
-            //$(content).insertAfter(_$title);
         }
         else {
-           _displayNoContentString();
+           _setNoContent();
         }
-        
-       
     }
 
     return {
