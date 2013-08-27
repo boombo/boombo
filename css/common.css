@@ -311,7 +311,8 @@ ul, ol {
   background-color: #FFF;
   border: solid #24A6E8;
   border-width: 10px 1px;
-  opacity: 0.9;
+  /*opacity: 0.9;*/
+  position: relative;
 }
 
 .page-container-centered {
