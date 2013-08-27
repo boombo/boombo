@@ -312,7 +312,7 @@ ul, ol {
   border: solid #24A6E8;
   border-width: 10px 1px;
   position: relative;
-  opacity: 0.9;
+  /*opacity: 0.9;*/
 }
 
 .page-container-centered {
