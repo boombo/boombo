@@ -187,12 +187,17 @@ var Content = function () {
     };
 
     var display = function (p_name, p_id) {
-        _$page.removeClass(_css.invisibleClass);
+        //_$page.removeClass(_css.invisibleClass);
         var title = $.trim(_$page.find("h1").html());
         _name = $.trim(p_name);
 
-        if (_name === title) return;                
+        if (_name === title) {
+            _$page.removeClass(_css.invisibleClass);
+            return;
+        }
+
         _setTitle(_name);
+        _$page.removeClass(_css.invisibleClass);
 
         if (!p_id) {
             if(_jqxhr && _jqxhr.readystate != 4) _jqxhr.abort();
