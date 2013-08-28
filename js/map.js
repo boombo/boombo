@@ -256,7 +256,7 @@ var Content = function () {
             ];
 
             var $content = $('<div>').append(content);
-            var $todelete;
+            var $todelete = $();
             var toDeleteLength = toDeleteArray.length;
 
             for (var i = 0; i < toDeleteLength; i++) {
