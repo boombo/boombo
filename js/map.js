@@ -246,6 +246,28 @@ var Content = function () {
         _$page.removeClass(_css.invisibleClass);
     }
 
+    var _cleanContent = function (content) {
+            var toDeleteArray = [
+                "ul.gallery",
+                "h2:contains(Notes et références)",
+                "h2:contains(Articles connexes)",
+                "h2:contains(Liens externes)", 
+                "h2:contains(Bibliographie)",   
+            ];
+
+            var $content = $('<div>').append(content);
+            var $todelete = $content.find("ul.gallery");
+            var toDeleteLength = toDeleteArray.length;
+
+            for (var i = 0; i < toDeleteLength; i++) {
+                $todelete = $todelete.add($content.find(toDeleteArray[i]));                
+            }
+
+            $todelete.nextAll().remove(); 
+            $todelete.remove();
+            return $content;
+    }
+
     var _displayContent = function (json) {
         var pages = json.query.pages;
         var pageKey = Object.keys(pages)[0];
@@ -256,21 +278,28 @@ var Content = function () {
             content = pages[pageKey].extract;
             content = content.replace(/\[modifier\]/gi,"");
             
-            var $content = $('<div>').append(content);
-            $content.find("ul.gallery").remove();
-            $content.find("h2:contains(Notes et références)").remove();
-            $content.find("h2:contains(Articles connexes)").remove(); 
-            $content.find("h2:contains(Liens externes)").remove();         
-            $content.find("h2:contains(Bibliographie)").remove();    
+            var $content = _cleanContent(content);
 
-            var obj = { images: [
-                {"index":"1","picId":"ehso9u",'castleId': 'Château_du_Hohlandsbourg',},
-                {"index":"2","picId":"djz6zb",'castleId': 'Château_du_Hohlandsbourg',},
-                {"index":"3","picId":"da3lwh",'castleId': 'Château_du_Hohlandsbourg',}
-            ]};
             var contentHtml = ich.contentTpl({name: _name}, {castleId: _id});
-            //var imagesHtml = ich.imagesTpl({images: JSON.stringify(_arrayToObjectLiteral(_pics.split(',')))});
-            var imagesHtml = ich.imagesTpl(obj);
+            var imagesHtml;
+
+            var picsObj = {};
+            var picsArray = [];
+            var picsStrArray = _pics.split(',');
+            var picsLength = picsStrArray.length;
+
+            if (picsLength === 3) {
+                for (var i = 0; i < picsLength; i++) {
+                    var picObj = {};
+                    picObj.index = i+1;
+                    picObj.picId = picsStrArray[i];
+                    picObj.castleId = _id;
+                    picsArray.push(picObj);
+                }
+
+                picsObj.images = picsArray;
+                imagesHtml = ich.imagesTpl(picsObj);
+            }
 
             _$page.find(".description").html(contentHtml);
             _$page.find("#text").html($content);
