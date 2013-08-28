@@ -124,7 +124,7 @@ var Map = function () {
                         _setIcon(e, true);
 
                         var prop = e.target.feature.properties;
-                        Content.display(prop.name, prop.wikipedia);
+                        Content.display(prop.name, prop.wikipedia, prop.pics);
                     }
                 });
             });
@@ -168,6 +168,8 @@ var Content = function () {
     // Other private variables
     var _$page = $(_css.pageId);
     var _name;
+    var _id;
+    var _pics;
     var _jqxhr;
 
     var init = function (p_options) {
@@ -186,10 +188,12 @@ var Content = function () {
         });
     };
 
-    var display = function (p_name, p_id) {
+    var display = function (p_name, p_id, p_pics) {
         //_$page.removeClass(_css.invisibleClass);
         var title = $.trim(_$page.find("h1").html());
         _name = $.trim(p_name);
+        _id = p_id; 
+        _pics = $.trim(p_pics);
 
         if (_name === title) {
             _$page.removeClass(_css.invisibleClass);
@@ -220,6 +224,16 @@ var Content = function () {
             });    
     }
    
+    var _arrayToObjectLiteral = function (p_array) {
+        var obj = [];
+
+        for (idx in p_array) {
+            obj.push ({'index': idx+1, 'picId': p_array[idx]});
+        }
+
+        return obj;
+    };
+
     var _setTitle = function (p_title) {
         var html = ich.titleTpl({name: p_title});
         _$page.find(".description").html(html); 
@@ -242,18 +256,25 @@ var Content = function () {
             content = pages[pageKey].extract;
             content = content.replace(/\[modifier\]/gi,"");
             
-            $(content).find("ul.gallery").remove();
-            //var $todelete = $("#js-page h2:contains(Notes et références), #js-page h2:contains(Articles connexes), #js-page h2:contains(Liens externes), #js-page h2:contains(Bibliographie)");
-            var $todelete = $(content).find("h2:contains(Notes et références)");
-            $todelete.add($(content).find("h2:contains(Articles connexes)")); 
-            $todelete.add($(content).find("h2:contains(Liens externes)"));         
-            $todelete.add($(content).find("h2:contains(Bibliographie)"));         
-            $todelete.nextAll().remove(); 
-            $todelete.remove();
+            var $content = $('<div>').append(content);
+            $content.find("ul.gallery").remove();
+            $content.find("h2:contains(Notes et références)").remove();
+            $content.find("h2:contains(Articles connexes)").remove(); 
+            $content.find("h2:contains(Liens externes)").remove();         
+            $content.find("h2:contains(Bibliographie)").remove();    
 
-            var html = ich.completeTpl({name: _name});
-            $(html).find(_css.textId).html(content);
-            _$page.find(".description").html(html);
+            var obj = { images: [
+                {"index":"1","picId":"ehso9u",'castleId': 'Château_du_Hohlandsbourg',},
+                {"index":"2","picId":"djz6zb",'castleId': 'Château_du_Hohlandsbourg',},
+                {"index":"3","picId":"da3lwh",'castleId': 'Château_du_Hohlandsbourg',}
+            ]};
+            var contentHtml = ich.contentTpl({name: _name}, {castleId: _id});
+            //var imagesHtml = ich.imagesTpl({images: JSON.stringify(_arrayToObjectLiteral(_pics.split(',')))});
+            var imagesHtml = ich.imagesTpl(obj);
+
+            _$page.find(".description").html(contentHtml);
+            _$page.find("#text").html($content);
+            _$page.find("div.images").html(imagesHtml);
         }
         else {
            _setNoContent();

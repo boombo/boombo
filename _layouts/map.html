@@ -22,23 +22,21 @@
 	<p>Aucune information n''est disponible</p>
 </script>
 
-<script id="completeTpl" type="text/html">
-	    <h1> {{name}} </h1> 
-	    <div id="content"> 
-		    <div class="images">  
-		        <div class="image">
-		            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-		        </div>
-		        <div class="image">
-		            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-		        </div>
-		        <div class="image">
-		            <img src="http://res.cloudinary.com/diy8beggy/image/upload/nopic_oifgyp.png" class="img-polaroid" style="margin: auto;display: inline-block;">
-		        </div>
-		        <div style="clear: left"></div>
-		    </div>
-		    <div id="text"></div>
-	 	</div>
+<script id="contentTpl" type="text/html">
+	<h1> {{name}} </h1> 
+	<div id="content"> 
+	    <div class="images"/>  
+	    <div id="text"></div>
+	</div>
+</script>
+
+<script id="imagesTpl" type="text/html">
+	{{#images}}
+	<div class="image">
+	    <img src="http://res.cloudinary.com/diy8beggy/image/upload/w_150,h_150/{{castleId}}_{{index}}_{{picId}}.png" class="img-polaroid" style="margin: auto;display: inline-block;">
+	</div>
+	{{/images}}
+	<div style="clear: both"/>
 </script>
 {% endraw %}
 
