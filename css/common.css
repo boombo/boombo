@@ -311,8 +311,9 @@ ul, ol {
   background-color: #FFF;
   border: solid #24A6E8;
   border-width: 10px 1px;
-  position: relative;
   opacity: 1;
+  position: relative;
+  z-index: 10;
 }
 
 .page-container-centered {
@@ -449,6 +450,7 @@ ul, ol {
     opacity: 1;
     padding: 12px 20px 12px 20px;
     width: 100%;
+    z-index: 10;
   }
 
   #pane{
