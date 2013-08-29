@@ -6,7 +6,7 @@
         {% capture lvl %}{{ page.url | append:'index.html' | split:'/' | size }}{% endcapture %}
         {% capture relative %}{% for i in (3..lvl) %}../{% endfor %}{% endcapture %}
         <a href="{{site.url}}" >
-          <img class="brand" src="{{ relative }}img/logo.svg" data-fallback="img/logo.png" alt="visualsace" />
+          <img class="brand" src="{{ relative }}img/logo.svg" data-fallback="{{ relative }}img/logo.png" alt="visualsace" />
         </a>
 
         <div id="menu" class="container navbar-menu-container">
