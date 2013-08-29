@@ -254,6 +254,7 @@ var Content = function () {
                 "h2:contains(Liens externes)", 
                 "h2:contains(Bibliographie)",
                 "h2:contains(Voir aussi)",
+                "h2:contains(Références)",
                 "h3:contains(Articles connexes)",
                 "h3:contains(Liens externes)",
             ];
