@@ -26,6 +26,13 @@ var Map = function () {
             }
         }
         _map = L.mapbox.map(_config.mapElementId, _config.mapId, _config.options);
+        _map.addControl(L.mapbox.geocoderControl(_config.mapId));
+
+        $(".leaflet-control-mapbox-geocoder").find('a')
+            .removeClass('mapbox-icon')
+            .removeClass('mapbox-icon-geocoder')
+            .addClass('icon-search');
+
         _addFeatures();
         _geolocate();
     };
@@ -292,8 +299,8 @@ var Content = function () {
             var picsStrArray = _pics.split(',');
             var picsLength = picsStrArray.length;
 
-	    // Remove parenthesis in wikipedia Id
-	    var _cleanedId = _id.replace(/[(,)]/g, '_');
+            // Suppression des parenthèses dans wikipedia Id
+            var _cleanedId = _id.replace(/[(,)]/g, '_');
 	    
             if (picsLength === 3) {
                 for (var i = 0; i < picsLength; i++) {
@@ -301,6 +308,7 @@ var Content = function () {
                     picObj.index = i+1;
                     picObj.picId = picsStrArray[i];
                     picObj.castleId = _cleanedId;
+                    picObj.alt = _name;
                     picsArray.push(picObj);
                 }
 
