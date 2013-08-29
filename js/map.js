@@ -252,7 +252,10 @@ var Content = function () {
                 "h2:contains(Notes et références)",
                 "h2:contains(Articles connexes)",
                 "h2:contains(Liens externes)", 
-                "h2:contains(Bibliographie)",   
+                "h2:contains(Bibliographie)",
+                "h2:contains(Voir aussi)",
+                "h3:contains(Articles connexes)",
+                "h3:contains(Liens externes)",
             ];
 
             var $content = $('<div>').append(content);
