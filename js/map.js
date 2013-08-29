@@ -292,12 +292,15 @@ var Content = function () {
             var picsStrArray = _pics.split(',');
             var picsLength = picsStrArray.length;
 
+	    // Remove parenthesis in wikipedia Id
+	    var _cleanedId = _id.replace(/[(,)]/g, '_');
+	    
             if (picsLength === 3) {
                 for (var i = 0; i < picsLength; i++) {
                     var picObj = {};
                     picObj.index = i+1;
                     picObj.picId = picsStrArray[i];
-                    picObj.castleId = _id;
+                    picObj.castleId = _cleanedId;
                     picsArray.push(picObj);
                 }
 
