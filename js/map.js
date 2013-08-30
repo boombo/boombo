@@ -279,22 +279,8 @@ var Content = function () {
             return $content;
     }
 
-    var _displayContent = function (json) {
-        var pages = json.query.pages;
-        var pageKey = Object.keys(pages)[0];
-        var content = "";
-
-        // Récupération content
-        if(pages && pageKey && pages[pageKey].extract) {
-            content = pages[pageKey].extract;
-            content = content.replace(/\[modifier\]/gi,"");
-            
-            var $content = _cleanContent(content);
-
-            var contentHtml = ich.contentTpl({name: _name}, {castleId: _id});
-            var imagesHtml;
-
-            var picsObj = {};
+var _getPicsLayout = function () {
+	    var picsObj = {};
             var picsArray = [];
             var picsStrArray = _pics.split(',');
             var picsLength = picsStrArray.length;
@@ -313,8 +299,23 @@ var Content = function () {
                 }
 
                 picsObj.images = picsArray;
-                imagesHtml = ich.imagesTpl(picsObj);
+                return ich.imagesTpl(picsObj);
             }
+}
+
+    var _displayContent = function (json) {
+        var pages = json.query.pages;
+        var pageKey = Object.keys(pages)[0];
+        var content = "";
+
+        // Récupération content
+        if(pages && pageKey && pages[pageKey].extract) {
+            content = pages[pageKey].extract;
+            content = content.replace(/\[modifier\]/gi,"");
+            
+            var $content = _cleanContent(content);
+            var contentHtml = ich.contentTpl({name: _name}, {castleId: _id});
+            var imagesHtml = _getPicsLayout();
 
             _$page.find(".description").html(contentHtml);
             _$page.find("#text").html($content);
