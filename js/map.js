@@ -14,6 +14,7 @@ var Map = function () {
 
     // Other local variables
     var _map;
+    var _layer;
     var _selectedIcon;
     var _selectedLayer;
     var _defaultIcon;
@@ -117,17 +118,17 @@ var Map = function () {
 
     function _addFeatures () {
         $.getJSON('../data/chateaux.geojson', function(geojson) {
-            var layer = L.geoJson(geojson, {
+            _layer = L.geoJson(geojson, {
                 onEachFeature: _onEachFeature
             }); 
 
-            layer.eachLayer(function (layer) {
-                layer.on({
+            _layer.eachLayer(function (p_layer) {
+                p_layer.on({
                     click: function(e){
                         if(_selectedLayer){
                             _setIcon(_selectedLayer, false);
                         }
-                        _selectedLayer = layer;
+                        _selectedLayer = p_layer;
                         _setIcon(e, true);
 
                         var prop = e.target.feature.properties;
@@ -141,7 +142,7 @@ var Map = function () {
                 maxClusterRadius: 35
             });
             
-            markers.addLayer(layer);
+            markers.addLayer(_layer);
             _map.addLayer(markers);
             _map.setZoom(8)
         });
@@ -313,7 +314,8 @@ var _getPicsLayout = function () {
             content = content.replace(/\[modifier\]/gi,"");
             
             var $content = _cleanContent(content);
-            var contentHtml = ich.contentTpl({name: _name}, {castleId: _id});
+            var contentObj = {name: _name, castleId: _id};
+            var contentHtml = ich.contentTpl(contentObj);
             var imagesHtml = _getPicsLayout();
 
             _$page.find(".description").html(contentHtml);
