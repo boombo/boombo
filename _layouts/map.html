@@ -27,13 +27,14 @@
 	<div id="content"> 
 	    <div class="images"/>  
 	    <div id="text"></div>
+	    <div class="link"></div>
 	</div>
 </script>
 
 <script id="imagesTpl" type="text/html">
 	{{#images}}
 	<div class="image">
-	    <img alt="{{alt}}" src="http://res.cloudinary.com/diy8beggy/image/upload/w_150,h_150/{{castleId}}_{{index}}_{{picId}}.png" class="img-polaroid" style="margin: auto;display: inline-block;">
+	    <img alt="{{alt}}" src="http://res.cloudinary.com/diy8beggy/image/upload/c_lfill,w_150,h_150/{{castleId}}_{{index}}_{{picId}}.png" class="img-polaroid" style="margin: auto;display: inline-block;">
 	</div>
 	{{/images}}
 	<div style="clear: both"/>
