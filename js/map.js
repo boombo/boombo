@@ -285,8 +285,7 @@ var _getPicsLayout = function () {
             var picsStrArray = _pics.split(',');
             var picsLength = picsStrArray.length;
 
-            // Suppression des parenthèses dans wikipedia Id
-            var _cleanedId = _id.replace(/[(,)]/g, '_');
+            var _cleanedId = _id.replace(/[(,),\'']/g, '_');
 	    
             if (picsLength === 3) {
                 for (var i = 0; i < picsLength; i++) {
