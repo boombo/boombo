@@ -308,7 +308,7 @@ var _getPicsLayout = function () {
                         //picObj.index = i+1;
                         //picObj.picId = picsStrArray[i];
                         picObj.picId = "oifgyp";
-                        picObj.castleId = "nopic;
+                        picObj.castleId = "nopic";
                         picObj.alt = "Photo indisponible";
                         picsArray.push(picObj);	
 	     	} 
