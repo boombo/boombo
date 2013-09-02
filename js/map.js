@@ -286,9 +286,11 @@ var _getPicsLayout = function () {
             var picsStrArray = _pics.split(',');
             var picsLength = picsStrArray.length;
 
+	    if (picsLength === 1 && picsStrArray[0] === "") return "";
+
             var _cleanedId = _id.replace(/[(,),\'']/g, '_');
 	    
-            if (picsLength === 3) {
+            //if (picsLength === 3) {
                 for (var i = 0; i < picsLength; i++) {
                     var picObj = {};
                     picObj.index = i+1;
@@ -297,10 +299,24 @@ var _getPicsLayout = function () {
                     picObj.alt = _name;
                     picsArray.push(picObj);
                 }
+	    
+	    var picsArrayLength = picsArray.length;
+
+	     if (picsArrayLength < 3) {
+	     	for (var i = 0; i < 3 - picsArrayLength; i++) {
+	     		var picObj = {};
+                        //picObj.index = i+1;
+                        //picObj.picId = picsStrArray[i];
+                        picObj.picId = "oifgyp";
+                        picObj.castleId = "nopic;
+                        picObj.alt = "Photo indisponible";
+                        picsArray.push(picObj);	
+	     	} 
+	     }
 
                 picsObj.images = picsArray;
                 return ich.imagesTpl(picsObj);
-            }
+            //}
 }
 
     var _displayContent = function (json) {
