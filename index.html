@@ -2,13 +2,12 @@
 layout: index
 title: visualsace
 ---
-
+{% comment %} <p>{{ post.content | strip_html | truncatewords:150}}</p>%} {% endcomment %}
 {% for post in paginator.posts limit: 5 %}
 <div class="post">
 	<h1><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h1>
 	<div class="date">{{ post.date | date_to_string }}</div>  
-	<br/>
-	<p>{{ post.content | strip_html | truncatewords:150}}</p> 
+	<p>{{ post.excerpt }}</p>
 	<a href="{{ site.baseurl }}{{ post.url }}">Lire la suite...</a>
 </div>
 {% endfor %}
