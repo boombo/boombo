@@ -305,18 +305,15 @@ var _getPicsLayout = function () {
 	     if (picsArrayLength < 3) {
 	     	for (var i = 0; i < 3 - picsArrayLength; i++) {
 	     		var picObj = {};
-                        //picObj.index = i+1;
-                        //picObj.picId = picsStrArray[i];
-                        picObj.picId = "rejeka";
-                        picObj.castleId = "nopic";
-                        picObj.alt = "Photo indisponible";
-                        picsArray.push(picObj);	
+                    picObj.picId = "rejeka";
+                    picObj.castleId = "nopic";
+                    picObj.alt = "Photo indisponible";
+                    picsArray.push(picObj);	
 	     	} 
-	     }
+	   }
 
-                picsObj.images = picsArray;
+        picsObj.images = picsArray;
                 return ich.imagesTpl(picsObj);
-            //}
 }
 
     var _displayContent = function (json) {
