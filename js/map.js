@@ -288,17 +288,17 @@ var _getPicsLayout = function () {
 
 	    if (picsLength === 1 && picsStrArray[0] === "") return "";
 
-            var _cleanedId = _id.replace(/[(,),\'']/g, '_');
+        var _cleanedId = _id.replace(/[(,),\'']/g, '_');
+        _cleanedId = _cleanedId.replace("%27", '_'); 
 	    
-            //if (picsLength === 3) {
-                for (var i = 0; i < picsLength; i++) {
-                    var picObj = {};
-                    picObj.index = i+1;
-                    picObj.picId = picsStrArray[i];
-                    picObj.castleId = _cleanedId;
-                    picObj.alt = _name;
-                    picsArray.push(picObj);
-                }
+        for (var i = 0; i < picsLength; i++) {
+            var picObj = {};
+            picObj.index = i+1;
+            picObj.picId = picsStrArray[i];
+            picObj.castleId = _cleanedId;
+            picObj.alt = _name;
+            picsArray.push(picObj);
+        }
 	    
 	    var picsArrayLength = picsArray.length;
 
