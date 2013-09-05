@@ -5,7 +5,7 @@ date: {}
 published: true
 ---
 
-Identifier les châteaux qui m'entourent. Voilà l'idée de départ qui a donné naissance à cette carte. Et si elle m'est utile, j'espère qu'elle le sera tout autant pour vous ! Pour la réalisation de cette carte je me suis basé sur les informations disponibles sur Wikipédia et OpenStreetMap. La description des châteaux est issue de Wikipédia, et les informations de localisation proviennent quant à elles d'OpenStreetMap.
+Identifier les châteaux qui m'entourent. Voilà l'idée de départ qui a donné naissance à cette carte. Et si elle m'est utile, j'espère qu'elle le sera tout autant pour vous ! Pour la réalisation de cette carte je me suis basé sur les informations disponibles sur [Wikipédia](http://www.wikipedia.org/ "Wikipédia") et [OpenStreetMap](http://www.openstreetmap.org/ "OpenStreetMap"). La description des châteaux est issue de Wikipédia, et les informations de localisation proviennent quant à elles d'OpenStreetMap.
 L'un et l'autre étant des outils collaboratifs alimentés par les internautes, les informations qu'ils contiennent peuvent être incomplètes.
 Ainsi, certains châteaux ont pu être oubliés, d'autres ne sont pas encore renseignés dans Wikipedia et aucune information les concernant ne sera donc affichée. 
 
