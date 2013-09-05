@@ -27,7 +27,7 @@ var Map = function () {
             }
         }
         _map = L.mapbox.map(_config.mapElementId, _config.mapId, _config.options);
-        _map.addControl(L.mapbox.geocoderControl(_config.mapId));
+        //_map.addControl(L.mapbox.geocoderControl(_config.mapId));
 
         $(".leaflet-control-mapbox-geocoder").find('a')
             .removeClass('mapbox-icon')
