@@ -11,5 +11,5 @@ Localisation des châteaux : [OpenStreetMap](http://www.openstreetmap.org/ "Open
 
 ##Modifications
 
-Ajout de photo en cours  
+Ajout de photos en cours  
 Dernière mise à jour : 06/09/2013
